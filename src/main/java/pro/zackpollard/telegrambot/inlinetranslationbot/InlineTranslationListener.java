@@ -2,6 +2,7 @@ package pro.zackpollard.telegrambot.inlinetranslationbot;
 
 import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.chat.inline.send.InlineQueryResponse;
+import pro.zackpollard.telegrambot.api.chat.inline.send.content.InputTextMessageContent;
 import pro.zackpollard.telegrambot.api.chat.inline.send.results.InlineQueryResult;
 import pro.zackpollard.telegrambot.api.chat.inline.send.results.InlineQueryResultArticle;
 import pro.zackpollard.telegrambot.api.event.Listener;
@@ -62,7 +63,7 @@ public class InlineTranslationListener implements Listener {
                 //that the text is being translated from.
                 inlineQueryResults.add(InlineQueryResultArticle.builder()
                         .title(lang.getCountryName())
-                        .messageText(translation)
+                        .inputMessageContent(InputTextMessageContent.builder().messageText(translation).build())
                         .description(translation)
                         .thumbUrl(new URL("https://raw.githubusercontent.com/hjnilsson/country-flags/master/png250px/" + lang.getCountryCode() + ".png"))
                         .build()
@@ -78,8 +79,8 @@ public class InlineTranslationListener implements Listener {
         //will be cached by telegrams servers for an hour, you can change the time accordingly
         event.getQuery().answer(telegramBot, InlineQueryResponse.builder()
                 .results(inlineQueryResults)
-                .cache_time(3600)
-                .is_personal(false)
+                .cacheTime(3600)
+                .isPersonal(false)
                 .build()
         );
     }
